@@ -1,11 +1,11 @@
 const express = require('express')
-const database = require("./config.js").DATABASE
+const config = require("./config.js")
 const mongoose = require('mongoose')
 const app = express()
 const port = 3000
 
-mongoose.connect(database.CONNECT, {
-    userNewUrlPaser: true,
+mongoose.connect(config.DATABASE.CONNECT, {
+    useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: false
