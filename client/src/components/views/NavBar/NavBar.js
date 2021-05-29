@@ -9,4 +9,3 @@ function NavBar() {
 }
 
 export default NavBar
-NavBar

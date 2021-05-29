@@ -2,7 +2,7 @@
   "name": "boiler-plate",
   "version": "1.0.0",
   "description": "boilerplate with mern",
-  "main": "index.js",
+  "main": "./server/index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
