@@ -67,6 +67,7 @@ userSchema.methods.comparePassword = function(plainPassword, callback) {
 
 userSchema.methods.generateToken = function(callback) {
     var user = this;
+    console.log(user)
 
     // jsonwebtoken을 사용해서 token 생성
     var token = jwt.sign(user._id.toHexString(), config.secretKey)
@@ -77,16 +78,17 @@ userSchema.methods.generateToken = function(callback) {
     })
 }
 
-userSchema.methods.findByToken = (token, cb) => {
-    var user = this;
-
+userSchema.statics.findByToken = function(token, cb) {
+    // var user = this; static 메서드이므로 this로 접근 불가
+    // User로 사용해야한다.
     // 토큰 복호화
-    jwt.verify(user.token, config.secretKey, (err, decoded) => {
-        // 유저 아이디 이용해서 유저 찾은 후
 
+    jwt.verify(token, config.secretKey, (err, decoded) => {
+        // 유저 아이디 이용해서 유저 찾은 후
         // 클라이언트에서 가져온 토큰과 DB에 보관된 토큰 일치여부 확인
 
-        user.findOne({"_id" : decoded, "token" : token}, (err, user) => {
+        console.log(decoded)
+        User.findOne({"_id" : decoded, "token" : token}, (err, user) => {
             if(err) return cb(err);
             cb(null, user)
         })

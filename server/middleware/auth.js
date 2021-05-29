@@ -9,7 +9,10 @@ let auth = (req, res, next) => {
     // 토큰 복호화 후 유저 찾기
     User.findByToken(token, (err, user) => {
         if(err) throw err;
-        if(!user) return res.json({isAuth: false, error: true})
+        if(!user) {
+            console.log("유저가 없다")
+            return res.json({isAuth: false, error: true})
+        }
         
         req.token = token;
         req.user = user;

@@ -13,6 +13,7 @@ app.use(express.urlencoded({extended: true}))
 
 // application/json
 app.use(express.json())
+app.use(cookieParser())
 
 mongoose.connect(config.mongoURI, {
     useNewUrlParser: true,
@@ -88,6 +89,16 @@ app.get('/api/users/auth', auth, (req, res) => { // 여기서 auth는 미들웨�
 		lastname: req.user.lastname,
 		role: req.user.role,
 		image: req.user.image
+	})
+})
+
+app.get('/api/users/logout', auth, (req, res) => {
+	User.findOneAndUpdate({_id: req.user._id}, {token: ""}, (err, user) => {
+		if(err) return res.json({success: false, err})
+
+		return res.status(200).send({
+			success: true
+		})
 	})
 })
 
